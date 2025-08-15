@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Spaceman Game</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #multiplier {
+            font-size: 60px;
+            color: yellow;
+            margin: 20px 0;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .start-btn {
+            background-color: green;
+            color: white;
+        }
+        .stop-btn {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 <b>Spaceman Game</b></h1>
+    <div id="multiplier">1.00x</div>
+    <button class="start-btn" onclick="startGame()">Mulai</button>
+    <button class="stop-btn" onclick="stopGame()">Berhenti</button>
+
+    <script>
+        let multiplier = 1.00;
+        let interval;
+        let running = false;
+
+        function startGame() {
+            if (running) return;
+            running = true;
+            multiplier = 1.00;
+            document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
+
+            interval = setInterval(() => {
+                multiplier += 0.01;
+                document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
+                if (multiplier >= 10) {
+                    stopGame();
+                }
+            }, 100);
+        }
+
+        function stopGame() {
+            clearInterval(interval);
+            running = false;
+        }
+    </script>
+</body>
+</html>
