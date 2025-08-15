@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spaceman Game</title>
+<style>
+    body {
+        background: black;
+        color: white;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+    h1 {
+        margin-top: 20px;
+    }
+    .multiplier {
+        font-size: 3em;
+        margin: 20px 0;
+        color: yellow;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        margin: 5px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+    #startBtn { background: green; color: white; }
+    #stopBtn { background: red; color: white; }
+</style>
+</head>
+<body>
+
+<h1>🚀 Spaceman Game</h1>
+<div class="multiplier" id="multiplier">1.00x</div>
+<button id="startBtn">Mulai</button>
+<button id="stopBtn" disabled>Berhenti</button>
+<p id="status"></p>
+
+<script>
+let multiplier = 1.00;
+let gameInterval;
+let crashPoint;
+let gameRunning = false;
+
+function startGame() {
+    if (gameRunning) return;
+    gameRunning = true;
+    multiplier = 1.00;
+    crashPoint = (Math.random() * 10 + 1).toFixed(2); // crash random
+    document.getElementById("multiplier").textContent = multiplier.toFixed(2) + "x";
+    document.getElementById("status").textContent = "";
+    document.getElementById("startBtn").disabled = true;
+    document.getElementById("stopBtn").disabled = false;
+
+    gameInterval = setInterval(() => {
+        multiplier += 0.01;
+        document.getElementById("multiplier").textContent = multiplier.toFixed(2) + "x";
+
+        if (multiplier >= crashPoint) {
+            clearInterval(gameInterval);
+            document.getElementById("status").textContent = "💥 Crash di " + multiplier.toFixed(2) + "x!";
+            gameRunning = false;
+            document.getElementById("startBtn").disabled = false;
+            document.getElementById("stopBtn").disabled = true;
+        }
+    }, 50);
+}
+
+function stopGame() {
+    if (!gameRunning) return;
+    clearInterval(gameInterval);
+    document.getElementById("status").textContent = "✅ Berhenti di " + multiplier.toFixed(2) + "x!";
+    gameRunning = false;
+    document.getElementById("startBtn").disabled = false;
+    document.getElementById("stopBtn").disabled = true;
+}
+
+document.getElementById("startBtn").addEventListener("click", startGame);
+document.get
